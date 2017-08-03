@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e -x
+
+export JAVA_HOME=/var/vcap/packages/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+export PIDFILE=/var/vcap/sys/run/kafka_server/kafka_server.pid
+
+source /var/vcap/packages/common/utils.sh
+
+case $1 in
+
+  start)
+
+    mkdir -p /var/vcap/store/kafka_server
+    mkdir -p /var/vcap/sys/log/kafka_server
+    mkdir -p /var/vcap/sys/run/kafka_server
+    chown -H vcap:vcap /var/vcap/store/kafka_server
+    chown -H vcap:vcap /var/vcap/sys/log/kafka_server
+    chown -H vcap:vcap /var/vcap/sys/run/kafka_server
+    chown -H -R vcap:vcap /var/vcap/packages/kafka
+
+    cp /var/vcap/jobs/kafka_server/config/log4j.properties /var/vcap/packages/kafka/kafka/config
+    cp /var/vcap/jobs/kafka_server/config/server.properties /var/vcap/packages/kafka/kafka/config
+
+    exec chpst -u vcap:vcap /var/vcap/packages/kafka/kafka/bin/kafka-server-start.sh \
+      /var/vcap/packages/kafka/kafka/config/server.properties &
+
+    echo $! > ${PIDFILE}
+    ;;
+
+  stop)
+    kill_and_wait ${PIDFILE}
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    ;;
+
+esac
+
+exit 0
+
+28350

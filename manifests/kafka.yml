@@ -1,0 +1,57 @@
+name: kafka
+director_uuid: fff78a5a-5cc3-4540-b1c2-c6ac136c8d14
+
+releases:
+  - {name: kafka, version: latest}
+stemcells:
+  - alias: default
+    os: ubuntu-trusty
+    version: latest
+
+instance_groups:
+  - name: zookeeper_server
+    instances: 3
+    azs: [z1, z2, z3]
+    jobs:
+    - name: zookeeper_server
+      release: kafka
+      provides:
+        zookeeper: {as: zookeeper}
+      consumes:
+        zookeeper: {from: zookeeper}
+    vm_type: large
+    cloud_properties:
+      tags:
+      - allow-ssh
+    stemcell: default
+    persistent_disk_type: large
+    networks:
+      - name: default
+  - name: kafka_server
+    instances: 3
+    azs: [z1, z2, z3]
+    jobs:
+    - name: kafka_server
+      release: kafka
+      provides:
+        kafka: {as: kafka}
+      consumes:
+        zookeeper: {from: zookeeper}
+        kafka: {from: kafka}
+      properties:
+        auto_create_topics: true
+        default_replication_factor: 1
+    vm_type: large
+    cloud_properties:
+      tags:
+      - allow-ssh
+    stemcell: default
+    persistent_disk_type: large
+    networks:
+      - name: default
+
+update:
+  canaries: 1
+  max_in_flight: 10
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000

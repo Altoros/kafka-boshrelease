@@ -1,0 +1,9 @@
+tickTime=2000
+dataDir=/var/vcap/store/zookeeper_server
+clientPort=2181
+initLimit=5
+syncLimit=2
+
+<% link('zookeeper').instances.each do |instance| %>
+server.<%= instance.index + 1 %>=<%= instance.address %>:2888:3888
+<% end %>

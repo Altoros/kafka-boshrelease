@@ -5,6 +5,7 @@ templates:
   bin/zookeeper_ctl.erb: bin/zookeeper_ctl
   config/log4j.properties.erb: config/log4j.properties
   config/zookeeper.properties.erb: config/zookeeper.properties
+  config/zookeeper_jaas.conf.erb: config/zookeeper_jaas.conf
 
 packages:
 -  kafka

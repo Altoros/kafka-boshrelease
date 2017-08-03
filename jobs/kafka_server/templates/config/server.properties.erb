@@ -86,6 +86,9 @@ num.partitions=1
 # This value is recommended to be increased for installations with data dirs located in RAID array.
 num.recovery.threads.per.data.dir=1
 
+default.replication.factor=3
+auto.create.topics.enable=true
+
 ############################# Log Flush Policy #############################
 
 # Messages are immediately written to the filesystem but by default we only fsync() to sync

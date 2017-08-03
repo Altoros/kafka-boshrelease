@@ -5,6 +5,7 @@ export JAVA_HOME=/var/vcap/packages/jdk
 export PATH=$JAVA_HOME/bin:$PATH
 
 export PIDFILE=/var/vcap/sys/run/kafka_server/kafka_server.pid
+export KAFKA_OPTS=-Djava.security.auth.login.config=/var/vcap/jobs/kafka_server/config/kafka_server_jaas.conf
 
 source /var/vcap/packages/common/utils.sh
 

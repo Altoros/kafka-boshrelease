@@ -3,16 +3,14 @@ name: kafka_server
 
 templates:
   bin/kafka_ctl.erb: bin/kafka_ctl
+  bin/generate_certs.sh.erb: bin/pre-start
   config/log4j.properties.erb: config/log4j.properties
   config/server.properties.erb: config/server.properties
   config/kafka_server_jaas.conf.erb: config/kafka_server_jaas.conf
   config/kafka_client_jaas.conf.erb: config/kafka_client_jaas.conf
   config/client_ssl.properties.erb: config/client_ssl.properties
-  ssl/kafka.server.keystore.jks: ssl/kafka.server.keystore.jks
-  ssl/kafka.server.truststore.jks: ssl/kafka.server.truststore.jks
-  ssl/kafka.client.keystore.jks: ssl/kafka.client.keystore.jks
-  ssl/kafka.client.truststore.jks: ssl/kafka.client.truststore.jks
-
+  ssl/ca-cert.erb: ssl/ca-cert
+  ssl/ca-key.erb: ssl/ca-key
 
 packages:
 -  kafka
@@ -30,5 +28,22 @@ consumes:
   type: zookeeper
 
 properties:
-  kafka.enable_topic_delete:
+  kafka.topic.enable_delete:
     default: "false"
+    description: dummy description
+  kafka.topic.replication_factor:
+    default: 3
+    description: dummy description
+  kafka.topic.auto_create:
+    default: true
+    description: dummy description
+  kafka.keystore_password:
+    description: dummy description
+  kafka.broker.server.username:
+    description: dummy description
+  kafka.broker.server.password:
+    description: dummy description
+  kafka.broker.client.username:
+    description: dummy description
+  kafka.broker.client.password:
+    description: dummy description

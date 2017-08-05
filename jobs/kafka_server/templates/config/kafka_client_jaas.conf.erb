@@ -1,11 +1,11 @@
 Client {
     org.apache.kafka.common.security.plain.PlainLoginModule required
-    username="admin"
-    password="123456";
+    username="<%= p("kafka.broker.client.username") %>"
+    password="<%= p("kafka.broker.client.password") %>";
 };
 
 KafkaClient {
     org.apache.kafka.common.security.plain.PlainLoginModule required
-    username="admin"
-    password="123456";
+    username="<%= p("kafka.broker.client.username") %>"
+    password="<%= p("kafka.broker.client.password") %>";
 };

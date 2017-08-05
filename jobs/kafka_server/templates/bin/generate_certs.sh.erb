@@ -1,7 +1,14 @@
 #!/bin/bash
-PASSWORD=123456
+
+export JAVA_HOME=/var/vcap/packages/jdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+PASSWORD=<%= p("kafka.keystore_password") %>
 VALIDITY=365
-openssl req -new -x509 -keyout ca-key -out ca-cert -days $VALIDITY -batch -nodes -subj "/CN=Konstantin Burtsev/OU=RnD/O=Altoros/L=Minsk/ST=Minsk/C=BY"
+
+cd /var/vcap/jobs/kafka_server/ssl
+
+if [ ! -f kafka.server.keystore.jks ] && [ ! -f kafka.server.truststore.jks ] ; then
 
 keytool -keystore kafka.server.keystore.jks -genkey -noprompt -alias localhost -dname "CN=Konstantin Burtsev, OU=RnD, O=Altoros, L=Minsk, ST=Minsk, C=BY" -validity $VALIDITY -storepass $PASSWORD -keypass $PASSWORD
 keytool -keystore kafka.client.keystore.jks -genkey -noprompt -alias localhost -dname "CN=Konstantin Burtsev, OU=RnD, O=Altoros, L=Minsk, ST=Minsk, C=BY" -validity $VALIDITY -storepass $PASSWORD -keypass $PASSWORD
@@ -18,3 +25,4 @@ keytool -keystore kafka.client.keystore.jks -certreq -noprompt -alias localhost 
 openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file-client -out cert-signed -days $VALIDITY -CAcreateserial
 keytool -keystore kafka.client.keystore.jks -import -noprompt -alias CARoot -file ca-cert -storepass $PASSWORD
 keytool -keystore kafka.client.keystore.jks -import -noprompt -alias localhost -file cert-signed -storepass $PASSWORD
+fi

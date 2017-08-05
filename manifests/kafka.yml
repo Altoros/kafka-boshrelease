@@ -19,6 +19,15 @@ instance_groups:
         zookeeper: {as: zookeeper}
       consumes:
         zookeeper: {from: zookeeper}
+      properties:
+        kafka:
+          broker:
+            server:
+              username: admin
+              password: 123456
+            client:
+              username: admin
+              password: 123456
     vm_type: large
     cloud_properties:
       tags:
@@ -39,8 +48,19 @@ instance_groups:
         zookeeper: {from: zookeeper}
         kafka: {from: kafka}
       properties:
-        auto_create_topics: true
-        default_replication_factor: 1
+        kafka:
+          keystore_password: 123456
+          topic:
+            enable_delete: false
+            replication_factor: 3
+            auto_create: true
+          broker:
+            server:
+              username: admin
+              password: 123456
+            client:
+              username: admin
+              password: 123456
     vm_type: large
     cloud_properties:
       tags:

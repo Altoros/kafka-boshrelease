@@ -19,3 +19,13 @@ provides:
 consumes:
 - name: zookeeper
   type: zookeeper
+
+properties:
+  kafka.broker.server.username:
+    default: ""
+  kafka.broker.server.password:
+    default: ""
+  kafka.broker.client.username:
+    default: ""
+  kafka.broker.client.password:
+    default: ""

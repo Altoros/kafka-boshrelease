@@ -21,7 +21,9 @@
 broker.id=<%= index %>
 
 # Switch to enable topic deletion or not, default value is false
-delete.topic.enable=<%= properties.kafka.enable_topic_delete %>
+delete.topic.enable=<%= p("kafka.topic.enable_delete") %>
+default.replication.factor=<%= p("kafka.topic.replication_factor") %>
+auto.create.topics.enable=<%= p("kafka.topic.auto_create") %>
 
 ############################# Socket Server Settings #############################
 
@@ -39,10 +41,9 @@ sasl.mechanism.inter.broker.protocol=PLAIN
 sasl.enabled.mechanisms=PLAIN
 
 ssl.keystore.location=/var/vcap/jobs/kafka_server/ssl/kafka.server.keystore.jks
-ssl.keystore.password=123456
-ssl.key.password=123456
+ssl.keystore.password=<%= p("kafka.keystore_password") %>
 ssl.truststore.location=/var/vcap/jobs/kafka_server/ssl/kafka.server.truststore.jks
-ssl.truststore.password=123456
+ssl.truststore.password=<%= p("kafka.keystore_password") %>
 ssl.client.auth=required
 ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1
 ssl.keystore.type=JKS
@@ -85,9 +86,6 @@ num.partitions=1
 # The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
 # This value is recommended to be increased for installations with data dirs located in RAID array.
 num.recovery.threads.per.data.dir=1
-
-default.replication.factor=3
-auto.create.topics.enable=true
 
 ############################# Log Flush Policy #############################
 

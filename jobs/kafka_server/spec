@@ -30,20 +30,24 @@ consumes:
 properties:
   kafka.topic.enable_delete:
     default: "false"
-    description: dummy description
+    description: enable topic deletion
   kafka.topic.replication_factor:
-    default: 3
-    description: dummy description
+    default: 1
+    description: default replication factor
   kafka.topic.auto_create:
     default: true
-    description: dummy description
+    description: auto create topic on write
   kafka.keystore_password:
-    description: dummy description
+    description: password for certificate keystore
   kafka.broker.server.username:
-    description: dummy description
+    description: kafka broker server username
   kafka.broker.server.password:
-    description: dummy description
+    description: kafka broker server password
   kafka.broker.client.username:
-    description: dummy description
+    description: kafka broker client username
   kafka.broker.client.password:
-    description: dummy description
+    description: kafka broker client password
+  kafka.broker.ca_cert:
+    description: CA cert for kafka SSL communication
+  kafka.broker.ca_key:
+    description: CA private key for SSL communication

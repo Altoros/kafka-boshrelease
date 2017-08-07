@@ -22,10 +22,10 @@ consumes:
 
 properties:
   kafka.broker.server.username:
-    default: ""
+    description: dummy description
   kafka.broker.server.password:
-    default: ""
+    description: dummy description
   kafka.broker.client.username:
-    default: ""
+    description: dummy description
   kafka.broker.client.password:
-    default: ""
+    description: dummy description

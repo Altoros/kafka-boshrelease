@@ -2,9 +2,11 @@ KafkaServer {
     org.apache.kafka.common.security.plain.PlainLoginModule required
     username="<%= p("kafka.broker.server.username") %>"
     password="<%= p("kafka.broker.server.password") %>"
+    user_<%= p("kafka.broker.server.username") %>="<%= p("kafka.broker.server.password") %>"
     user_<%= p("kafka.broker.client.username") %>="<%= p("kafka.broker.client.password") %>";
 };
 
+//zookeeper client creds
 Client {
     org.apache.kafka.common.security.plain.PlainLoginModule required
     username="<%= p("kafka.broker.client.username") %>"

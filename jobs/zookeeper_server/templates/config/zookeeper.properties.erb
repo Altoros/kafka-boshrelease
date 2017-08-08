@@ -7,3 +7,7 @@ syncLimit=2
 <% link('zookeeper').instances.each do |instance| %>
 server.<%= instance.index + 1 %>=<%= instance.address %>:2888:3888
 <% end %>
+
+authProvider.1=org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+requireClientAuthScheme=sasl
+jaasLoginRenew=3600000

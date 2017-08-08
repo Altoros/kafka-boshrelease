@@ -7,6 +7,8 @@ export ZOO_LOG_DIR=/var/vcap/sys/logs/zookeeper_server
 
 export PIDFILE=/var/vcap/sys/run/zookeeper_server/zookeeper_server.pid
 
+export KAFKA_OPTS="-Djava.security.auth.login.config=/var/vcap/jobs/zookeeper_server/config/zookeeper_jaas.conf"
+
 source /var/vcap/packages/common/utils.sh
 
 case $1 in

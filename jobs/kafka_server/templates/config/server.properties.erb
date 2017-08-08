@@ -21,7 +21,9 @@
 broker.id=<%= index %>
 
 # Switch to enable topic deletion or not, default value is false
-delete.topic.enable=true
+delete.topic.enable=<%= p("kafka.topic.enable_delete") %>
+default.replication.factor=<%= p("kafka.topic.replication_factor") %>
+auto.create.topics.enable=<%= p("kafka.topic.auto_create") %>
 
 ############################# Socket Server Settings #############################
 
@@ -31,14 +33,30 @@ delete.topic.enable=true
 #     listeners = security_protocol://host_name:port
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
-listeners=PLAINTEXT://0.0.0.0:9092
+#listeners=PLAINTEXT://0.0.0.0:9092
+listeners=SASL_PLAINTEXT://0.0.0.0:9092
+
+security.inter.broker.protocol=SASL_PLAINTEXT
+sasl.mechanism.inter.broker.protocol=PLAIN
+sasl.enabled.mechanisms=PLAIN
+
+ssl.keystore.location=/var/vcap/jobs/kafka_server/ssl/kafka.server.keystore.jks
+ssl.keystore.password=<%= p("kafka.keystore_password") %>
+ssl.truststore.location=/var/vcap/jobs/kafka_server/ssl/kafka.server.truststore.jks
+ssl.truststore.password=<%= p("kafka.keystore_password") %>
+ssl.client.auth=required
+ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1
+ssl.keystore.type=JKS
+ssl.truststore.type=JKS
 
 # Hostname and port the broker will advertise to producers and consumers. If not set,
 # it uses the value for "listeners" if configured.  Otherwise, it will use the value
 # returned from java.net.InetAddress.getCanonicalHostName().
 
 # need to add the public ip address here!
-advertised.listeners=PLAINTEXT://<%= spec.ip %>:9092
+# advertised.listeners=PLAINTEXT://<%= spec.ip %>:9092
+advertised.listeners=SASL_PLAINTEXT://<%= spec.ip %>:9092
+
 # The number of threads handling network requests
 num.network.threads=3
 

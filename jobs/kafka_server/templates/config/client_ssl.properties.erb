@@ -1,0 +1,6 @@
+ssl.truststore.location=/var/vcap/jobs/kafka_server/ssl/kafka.client.truststore.jks
+ssl.truststore.password=<%= p("kafka.keystore_password") %>
+ssl.keystore.location=/var/vcap/jobs/kafka_server/ssl/kafka.client.keystore.jks
+ssl.keystore.password=<%= p("kafka.keystore_password") %>
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=PLAIN

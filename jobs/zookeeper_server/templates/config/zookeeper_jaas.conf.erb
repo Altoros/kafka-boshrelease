@@ -1,0 +1,12 @@
+Server {
+    org.apache.kafka.common.security.plain.PlainLoginModule required
+    username="<%= p("kafka.broker.server.username") %>"
+    password="<%= p("kafka.broker.server.password") %>"
+    user_<%= p("kafka.broker.client.username") %>="<%= p("kafka.broker.client.password") %>";
+};
+
+Client {
+    org.apache.kafka.common.security.plain.PlainLoginModule required
+    username="<%= p("kafka.broker.client.username") %>"
+    password="<%= p("kafka.broker.client.password") %>";
+};

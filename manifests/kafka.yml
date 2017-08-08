@@ -19,6 +19,15 @@ instance_groups:
         zookeeper: {as: zookeeper}
       consumes:
         zookeeper: {from: zookeeper}
+      properties:
+        kafka:
+          broker:
+            server:
+              username: admin
+              password: 123456
+            client:
+              username: client
+              password: 123456
     vm_type: large
     cloud_properties:
       tags:
@@ -39,8 +48,71 @@ instance_groups:
         zookeeper: {from: zookeeper}
         kafka: {from: kafka}
       properties:
-        auto_create_topics: true
-        default_replication_factor: 1
+        kafka:
+          keystore_password: 123456
+          topic:
+            enable_delete: false
+            replication_factor: 3
+            auto_create: true
+          broker:
+            server:
+              username: admin
+              password: 123456
+            client:
+              username: client
+              password: 123456
+            ca_cert: |+
+              -----BEGIN CERTIFICATE-----
+              MIIDpzCCAo+gAwIBAgIJAO0IEjhoyz24MA0GCSqGSIb3DQEBCwUAMGoxGzAZBgNV
+              BAMMEktvbnN0YW50aW4gQnVydHNldjEMMAoGA1UECwwDUm5EMRAwDgYDVQQKDAdB
+              bHRvcm9zMQ4wDAYDVQQHDAVNaW5zazEOMAwGA1UECAwFTWluc2sxCzAJBgNVBAYT
+              AkJZMB4XDTE3MDgwNDIxMzAyOVoXDTE4MDgwNDIxMzAyOVowajEbMBkGA1UEAwwS
+              S29uc3RhbnRpbiBCdXJ0c2V2MQwwCgYDVQQLDANSbkQxEDAOBgNVBAoMB0FsdG9y
+              b3MxDjAMBgNVBAcMBU1pbnNrMQ4wDAYDVQQIDAVNaW5zazELMAkGA1UEBhMCQlkw
+              ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDHW+jfftclfMq+PZS05TJX
+              WMkxZBM+XkR10fYMEPnKzi72e1w7ugToNs7wZAQhVHMt/Zz+2Wy8ZEupP8RlmUbj
+              vxHa8bS92o11Rg2TjKBlqZNAZqijeTDvXyY6fAmG9fnfgoyTBEQ2rmRXVExwf4NR
+              CCHsLJS7LG6hK3V9lEzcd9K+gddGqBHPhbB/tzQoESL793Me5mpG/rqknML4vftL
+              VTzSZh6bO+QbJy5Cv49MuAmSzYTJQwTvu+shr/ZlLYK3m2IsK2tMyYGVRc1FWPXi
+              iiyvqa3Urpit+Heb+ukfeei7E7/Hek2BefyZBDyYF14pDXzirndnAWNVOj7i8+yz
+              AgMBAAGjUDBOMB0GA1UdDgQWBBS5BsptvjB8xv9fTAbzuaLDJVeTpjAfBgNVHSME
+              GDAWgBS5BsptvjB8xv9fTAbzuaLDJVeTpjAMBgNVHRMEBTADAQH/MA0GCSqGSIb3
+              DQEBCwUAA4IBAQAH+RShJNjxU3BA5BoxgMYa9N+Gdh8lc/0LIPmfgNSCyEQPpQFB
+              NfkRYlfLX1xLAjq9OS1srhQbPCN7v6slXGj6e7S+/lK7SNFKMgkD36ByErSUU0VR
+              jbav903ClYtjkgvWEuysrbAJDQgQuYOBT2hFrv8wfnqH6yt0N9VFH9UkBQTbcmC6
+              NO48JhvrzHo1yPvXmg/5/vB5KxAnScgqIbg6xqwUZN6FRYiSMCy7BMAb12MNpgao
+              iKSRVRQTUrbdUboTdIp7b0uLEeipxWvaakT9VwuYAR4/kD0zHPYoJ+nuDkUMcOGD
+              hZn3+o7MhlcVxLvHumJb6qhgeJ6/gEOGJj1f
+              -----END CERTIFICATE-----
+            ca_key: |
+              -----BEGIN PRIVATE KEY-----
+              MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDHW+jfftclfMq+
+              PZS05TJXWMkxZBM+XkR10fYMEPnKzi72e1w7ugToNs7wZAQhVHMt/Zz+2Wy8ZEup
+              P8RlmUbjvxHa8bS92o11Rg2TjKBlqZNAZqijeTDvXyY6fAmG9fnfgoyTBEQ2rmRX
+              VExwf4NRCCHsLJS7LG6hK3V9lEzcd9K+gddGqBHPhbB/tzQoESL793Me5mpG/rqk
+              nML4vftLVTzSZh6bO+QbJy5Cv49MuAmSzYTJQwTvu+shr/ZlLYK3m2IsK2tMyYGV
+              Rc1FWPXiiiyvqa3Urpit+Heb+ukfeei7E7/Hek2BefyZBDyYF14pDXzirndnAWNV
+              Oj7i8+yzAgMBAAECggEAWtXI7JSZqQ4MPtRGPooz/tKIkYWcsw02ukxZhLPzbPG3
+              Oj2JD/m5JKlcbvHTY/Bbrrfg4cnlno1AYDSa4wQM5dZ4Zz88cEj1rVqm8vTfXJMA
+              chaUfi/JGThMbdd4a9MF8E5GiPIntpaNR7E0RwoCplhDRJ4ngoVDPxJTLU32G3l6
+              rbAkzJNrKr6Pu/XdejWbqjKn5pQ3ztNxdynZU/uoCTtR84pl6ty4Hst1ZLJ6HJ1N
+              lUIytlK/zl2qLCJEMNfUBuyg8rKgP2//y86ivkric4ESyo/VZlgXtZlB43jaDf0a
+              +0EguQnsWsUfwr6ft9gqNSr6BqUVWjU3Mdd/08mhMQKBgQD1VW20oqj20dmwjJkn
+              HQSYM58jgX460NFEsF3YOAuBJ4nDL+vC2RmlfIcNBXt3KgAkeKf82O+K26I6cehC
+              V5bwiguKOrrOwU/ijjQw+obQin+csrNiqsB/CLyu3n+UY972gS/rOubrinmtmcHU
+              dh0CZK4/k9DmgUoSP2f3mLw4awKBgQDQBsgSLJbRAQjrRouTmLwyT3Hq+UiMKWUo
+              S01tTf1lmYi7ehiLZYWs0DLSX9wAe1WezFtIyQGPanYWATY3Pt/fKoesrA/SejTy
+              827LfwIdQ8dUfFXObJ/NUEiNxuoSvSNyVrqRf3HgNKnAHqRd+mxCdxNmjDadRjoG
+              0y+HyobO2QKBgQDV+39GkKGjNoITNW7X6L17K3tgcq/xCPWeXd5cmvWd3yiPsJqI
+              RufRqX3545A+7clWBk8vgN/eU5d6NqQISXGDuEQ8euE5OO8+gh4PolQ4TLTlrhA8
+              vQZNRweb1sGcYke05hUvrR6AzzU2L+gaMjM3RS2ekoUgqCA9LkS2duekpQKBgG+2
+              VJa97zfJ8Ho4Zhga+2WhGDHxMK5kRHiBB9FdAmkfLDhRdwDUwhZtr/0dkU2I7g/a
+              +mJ53yafK07h07WTRDHZ6wYlWFHVYr3dUHBjgkUo8tBB/Opflulw5aWNXoI1o+Vx
+              AbvEzuhyH36Wdfop0x1WSMrXHTUUU3D61Bl9/yrxAoGAYKusDNgqFO9HL/GqQQ/Z
+              rkNJVKT+Lv6PsKiuT3ipdAX3ys6VEsBZGJw1ZEk2Tfv8rxU6AkXFqxfaHJfjFe7y
+              eGo7Sm+sdQMh1lKshLuA3cJ2F7jmysuAVmZTn179RohhrGHVzWPsHu2FqlAlHXed
+              Hk3f7515vKa3qmZMAZ6RZXs=
+              -----END PRIVATE KEY-----
     vm_type: large
     cloud_properties:
       tags:

@@ -3,8 +3,14 @@ name: kafka_server
 
 templates:
   bin/kafka_ctl.erb: bin/kafka_ctl
+  bin/generate_certs.sh.erb: bin/pre-start
   config/log4j.properties.erb: config/log4j.properties
   config/server.properties.erb: config/server.properties
+  config/kafka_server_jaas.conf.erb: config/kafka_server_jaas.conf
+  config/kafka_client_jaas.conf.erb: config/kafka_client_jaas.conf
+  config/client_ssl.properties.erb: config/client_ssl.properties
+  ssl/ca-cert.erb: ssl/ca-cert
+  ssl/ca-key.erb: ssl/ca-key
 
 packages:
 -  kafka
@@ -20,3 +26,28 @@ consumes:
   type: kafka
 - name: zookeeper
   type: zookeeper
+
+properties:
+  kafka.topic.enable_delete:
+    default: "false"
+    description: enable topic deletion
+  kafka.topic.replication_factor:
+    default: 1
+    description: default replication factor
+  kafka.topic.auto_create:
+    default: true
+    description: auto create topic on write
+  kafka.keystore_password:
+    description: password for certificate keystore
+  kafka.broker.server.username:
+    description: kafka broker server username
+  kafka.broker.server.password:
+    description: kafka broker server password
+  kafka.broker.client.username:
+    description: kafka broker client username
+  kafka.broker.client.password:
+    description: kafka broker client password
+  kafka.broker.ca_cert:
+    description: CA cert for kafka SSL communication
+  kafka.broker.ca_key:
+    description: CA private key for SSL communication

@@ -1,5 +1,5 @@
 ---
-name: zookeeper_server
+name: zookeeper
 
 templates:
   bin/zookeeper_ctl.erb: bin/zookeeper_ctl

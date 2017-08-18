@@ -6,7 +6,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 PASSWORD=<%= p("kafka.keystore_password") %>
 VALIDITY=365
 
-cd /var/vcap/jobs/kafka_server/ssl
+cd /var/vcap/jobs/kafka/ssl
 
 if [ ! -f kafka.server.keystore.jks ] && [ ! -f kafka.server.truststore.jks ] ; then
 

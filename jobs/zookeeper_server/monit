@@ -1,4 +1,0 @@
-check process zookeeper
-  with pidfile /var/vcap/sys/run/zookeeper_server/zookeeper_server.pid
-  start program "/var/vcap/jobs/zookeeper_server/bin/zookeeper_ctl start" with timeout 30 seconds
-  stop program "/var/vcap/jobs/zookeeper_server/bin/zookeeper_ctl stop"

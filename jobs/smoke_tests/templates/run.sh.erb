@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+
+import threading, logging, time
+import multiprocessing
+import time
+import os
+import json
+import string
+import random
+import sys
+
+
+#echo <%= p("errand.stdout") %>
+#echo <%= p("errand.stderr") %> 1>&2
+
+
+from kafka import KafkaProducer, KafkaConsumer
+
+len = 20
+count = 100000
+cons_msg = 0
+i = 10000
+
+
+def base_str():
+    return (string.letters+string.digits)
+def key_gen():
+    keylist = [random.choice(base_str()) for i in range(len)]
+    return ("".join(keylist))
+
+topic = key_gen()
+message = key_gen()
+
+
+#services = json.loads(os.getenv('VCAP_SERVICES'))
+#kafka_env = services['kafka-on-demand'][0]['credentials']
+
+broker1 = "<%= link('kafka').instances[0].address %>" + ":9092"
+broker2 = "<%= link('kafka').instances[0].address %>" + ":9092"
+username = "client"
+password = "12345678"
+#topic = kafka_env['topicName']
+
+producer = KafkaProducer(bootstrap_servers=broker1, security_protocol="SASL_PLAINTEXT", sasl_mechanism="PLAIN", sasl_plain_username=username, sasl_plain_password=password)
+
+for _ in range(count):
+    producer.send(topic, message)
+    if _ % i == 0:
+      print "sent %s messages" % i
+      i = i + 10000
+    if _ == count-1:
+      print "sent %s messages" % count
+
+producer.flush()
+producer.close()
+
+
+consumer = KafkaConsumer(topic, bootstrap_servers=broker2 , auto_offset_reset='earliest', security_protocol="SASL_PLAINTEXT", sasl_mechanism="PLAIN", sasl_plain_username=username, sasl_plain_password=password)
+
+i = 10000
+
+for msg in consumer:
+  if msg.value == message:
+     cons_msg += 1
+     if cons_msg % i == 0:
+       print "received %s messages" % i
+       i = i + 10000
+
+  if msg.offset == count-1:
+    time.sleep(0.1)
+    print "last message %s received from %s topic (offset=%s)" % (message, msg.topic, msg.offset)
+    time.sleep(0.1)
+    print "TEST SUCCESS"
+    consumer.close
+    sys.exit(0)
+
+  if msg.offset != cons_msg-1:
+    print "last message %s received from %s topic (offset=%s)" % (message, msg.topic, msg.offset)
+    print "TEST FAILED"
+    consumer.close
+    sys.exit(1)

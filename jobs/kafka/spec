@@ -1,5 +1,5 @@
 ---
-name: kafka_server
+name: kafka
 
 templates:
   bin/kafka_ctl.erb: bin/kafka_ctl

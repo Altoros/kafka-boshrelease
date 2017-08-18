@@ -9,11 +9,11 @@ stemcells:
     version: latest
 
 instance_groups:
-  - name: zookeeper_server
+  - name: zookeeper
     instances: 3
     azs: [z1, z2, z3]
     jobs:
-    - name: zookeeper_server
+    - name: zookeeper
       release: kafka
       provides:
         zookeeper: {as: zookeeper}
@@ -36,11 +36,11 @@ instance_groups:
     persistent_disk_type: large
     networks:
       - name: default
-  - name: kafka_server
+  - name: kafka
     instances: 3
     azs: [z1, z2, z3]
     jobs:
-    - name: kafka_server
+    - name: kafka
       release: kafka
       provides:
         kafka: {as: kafka}
@@ -119,6 +119,20 @@ instance_groups:
       - allow-ssh
     stemcell: default
     persistent_disk_type: large
+    networks:
+      - name: default
+
+  - name: smoke_tests
+    lifecycle: errand
+    instances: 1
+    azs: [z1, z2, z3]
+    jobs:
+      - name: smoke_tests
+        release: kafka
+        consumes:
+          kafka: {from: kafka}
+    vm_type: default
+    stemcell: default
     networks:
       - name: default
 

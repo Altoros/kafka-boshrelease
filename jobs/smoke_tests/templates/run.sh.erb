@@ -37,8 +37,8 @@ message = key_gen()
 
 broker1 = "<%= link('kafka').instances[0].address %>" + ":9092"
 broker2 = "<%= link('kafka').instances[0].address %>" + ":9092"
-username = "client"
-password = "12345678"
+username = "<%= link('kafka').p('kafka.broker.client.username') %>"
+password = "<%= link('kafka').p('kafka.broker.client.password') %>"
 #topic = kafka_env['topicName']
 
 producer = KafkaProducer(bootstrap_servers=broker1, security_protocol="SASL_PLAINTEXT", sasl_mechanism="PLAIN", sasl_plain_username=username, sasl_plain_password=password)

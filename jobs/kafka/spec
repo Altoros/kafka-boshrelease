@@ -20,6 +20,9 @@ packages:
 provides:
 - name: kafka
   type: kafka
+  properties:
+  - kafka.broker.client.username
+  - kafka.broker.client.password
 
 consumes:
 - name: kafka
